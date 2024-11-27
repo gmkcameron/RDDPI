@@ -1,4 +1,4 @@
-# RELATÓRIO DIGITAL DIÁRIO DE PACIENTE IDOSO
+# RELATÓRIO DIGITAL DIÁRIO DE PACIENTE IDOSO (RDDPI)
 O aplicativo foi desenvolvido com o objetivo de atender de forma abrangente às necessidades relacionadas à rotina de cuidados com pacientes idosos.
 Este projeto foi criado em grupo, na Disciplina de Programação para Dispositivos Móveis em Android, da Universidade Estácio de Sá | Teresópolis-RJ
 
