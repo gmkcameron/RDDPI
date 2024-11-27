@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+        <h1 class="text-center my-4">Detalhes do Prontuário</h1>
+
+        {% if prontuario %}
+          <table class="table table-bordered border-primary">
+            <!-- Relacionamentos -->
+            <tr>
+              <td><strong>Paciente:</strong></td>
+              <td class="text-capitalize">{{ prontuario.paciente }}</td>
+            </tr>
+            <tr>
+              <td><strong>Médico:</strong></td>
+              <td class="text-capitalize">{{ prontuario.medico }}</td>
+            </tr>
+            
+            <!-- Dados do Registro -->
+            <tr>
+              <td><strong>Data da Consulta:</strong></td>
+              <td>{{ prontuario.data_consulta }}</td>
+            </tr>
+            <tr>
+              <td><strong>Horário:</strong></td>
+              <td>{{ prontuario.horario }}</td>
+            </tr>
+
+            <!-- Medicamento Aplicado -->
+            <tr>
+              <td><strong>Medicamento Aplicado:</strong></td>
+              <td class="text-capitalize">{{ prontuario.medicamentos_aplicados|default:"-" }}</td>
+            </tr>
+
+            <!-- Pressão Arterial -->
+            <tr>
+              <td><strong>Pressão Arterial:</strong></td>
+              <td>{{ prontuario.pressao_arterial|default:"-" }}</td>
+            </tr>
+
+            <!-- Temperatura -->
+            <tr>
+              <td><strong>Temperatura:</strong></td>
+              <td>{{ prontuario.temperatura|default:"-" }}</td>
+            </tr>
+
+            <tr>
+              <td><strong>Frequência Cardíaca:</strong></td>
+              <td>{{ prontuario.frequencia_cardiaca }}</td>
+            </tr>
+            <tr>
+              <td><strong>Frequência Respiratória:</strong></td>
+              <td>{{ prontuario.frequencia_respiratoria }}</td>
+            </tr>
+            <tr>
+              <td><strong>Saturação de Oxigênio:</strong></td>
+              <td>{{ prontuario.saturacao_oxigenio }}</td>
+            </tr>
+            <tr>
+              <td><strong>Glicemia:</strong></td>
+              <td>{{ prontuario.glicemia }}</td>
+            </tr>
+            <tr>
+            <!-- Observações -->
+            <tr>
+              <td><strong>Observações:</strong></td>
+              <td class="text-capitalize">{{ prontuario.observacoes|default:"-" }}</td>
+            </tr>
+
+            
+          </table>
+        {% else %}
+          <p>Nenhum prontuário encontrado.</p>
+        {% endif %}
+        <div class="text-center mt-4">
+          <a href="{% url 'prontuario_update' prontuario.id %}" class="btn btn-sm btn-warning">Editar</a>
+          <form action="{% url 'prontuario_delete' prontuario.id %}" 
+            onsubmit="return confirm('Tem certeza de que deseja excluir este prontuário?')"
+            method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+          </form>
+          <a href="{% url 'prontuario_list' %}" class="btn btn-sm btn-secondary">Voltar</a>
+        </div>
+      </div>
+    </div>
+{% endblock %}

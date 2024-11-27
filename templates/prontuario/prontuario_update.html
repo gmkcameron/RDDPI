@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+        <h1>Editar Prontuário</h1>
+        <form method="post">
+          {% csrf_token %}
+          <h2 class="form-title mt-4">Atualizar Informações do Prontuário</h2>
+          {{ form|bootstrap_horizontal }}
+          <nav class="navbar col-md-10">
+            <div class="container-fluid">
+              <button class="btn btn-primary me-2" type="submit">Salvar</button>
+              <a class="nav-link" href="{% url 'prontuario_detail' prontuario.id %}">Cancelar</a>
+            </div>
+          </nav>
+        </form>
+      </div>
+    </div>
+{% endblock %}

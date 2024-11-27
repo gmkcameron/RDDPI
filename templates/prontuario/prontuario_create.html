@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+        <h1 class="text-center">Cadastrar Prontuário</h1>
+
+        <form method="post">
+          {% csrf_token %}
+          <h3 class="form-title mt-4">Informações do Paciente</h3>
+          {{ form.paciente|bootstrap_horizontal }}
+          {{ form.medico|bootstrap_horizontal }}
+
+          <h3 class="form-title mt-4">Detalhes do Registro</h3>
+          {{ form.horario|bootstrap_horizontal }}
+          {{ form.medicamentos_aplicados|bootstrap_horizontal }}
+
+          <h3 class="form-title mt-4">Sinais Vitais</h3>
+          {{ form.pressao_arterial|bootstrap_horizontal }}
+          {{ form.temperatura|bootstrap_horizontal }}
+          {{ form.frequencia_cardiaca|bootstrap_horizontal }}
+          {{ form.frequencia_respiratoria|bootstrap_horizontal }}
+          {{ form.saturacao_oxigenio|bootstrap_horizontal }}
+          {{ form.glicemia|bootstrap_horizontal }}
+
+          <h3 class="form-title mt-4">Observações</h3>
+          {{ form.observacoes|bootstrap_horizontal }}
+
+          <nav class="navbar bg-body-tertiary col-md-8 mt-4">
+            <div class="container-fluid justify-content-center">
+              <button class="btn btn-primary me-2" type="submit">Salvar</button>
+              <a class="btn btn-secondary" href="{% url 'prontuario_list' %}">Cancelar</a>
+            </div>
+          </nav>
+        </form>
+      </div>
+    </div>
+{% endblock %}

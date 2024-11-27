@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Medicos{% endblock %}
+    
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
+    <h2 >Lista de Medicos</h2>
+    <a href="{% url 'medico_create' %}" class="btn btn-primary">Novo Medico</a>
+</nav>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CRM</th>
+            <th>Contato</th>
+            <th>Especialidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if medicos %}
+            {% for medico in medicos %}
+                <tr>
+                    <td>{{ medico.id }}</td>
+                    <td>{{ medico.full_name }}</td>
+                    <td>{{ medico.crm }}</td>
+                    <td>{{ medico.phone_number }}</td>
+                    <td>
+                        {% for especialidade in medico.especialidades.all %}
+                            {{ especialidade.nome }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Nenhuma especialidade cadastrada
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{% url 'medico_detail' medico.id %}" class="btn btn-sm btn-primary">Ver</a>
+                        <a href="{% url 'medico_update' medico.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <form action="{% url 'medico_delete' medico.id %}" 
+                        onsubmit="return confirm('Tem certeza de que deseja excluir o médico {{ medico.full_name|title}}?')"
+                        method="delete" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button></form>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6">Nenhum medico cadastrado.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

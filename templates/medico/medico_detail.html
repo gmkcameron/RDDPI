@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+        <h1 class="text-center my-4">Detalhes do Médico</h1>
+
+        {% if medico %}
+          <table class="table table-bordered border-primary">
+            <!-- Informações Pessoais -->
+            <tr>
+              <td><strong>Nome:</strong></td>
+              <td class="text-capitalize">{{ medico.first_name }}</td>
+            </tr>
+            <tr>
+              <td><strong>Sobrenome:</strong></td>
+              <td class="text-capitalize">{{ medico.last_name }}</td>
+            </tr>
+            <tr>
+              <td><strong>Gênero:</strong></td>
+              <td class="text-capitalize">{{ medico.genero }}</td>
+            </tr>
+            <tr>
+              <td><strong>Data de Nascimento:</strong></td>
+              <td>{{ medico.birth_date }}</td>
+            </tr>
+            <tr>
+              <td><strong>CPF:</strong></td>
+              <td>{{ medico.cpf }}</td>
+            </tr>
+            <tr>
+              <td><strong>RG:</strong></td>
+              <td>{{ medico.rg }}</td>
+            </tr>
+            <tr>
+              <td><strong>Email:</strong></td>
+              <td>{{ medico.email }}</td>
+            </tr>
+            <tr>
+              <td><strong>Telefone:</strong></td>
+              <td>{{ medico.phone_number }}</td>
+            </tr>
+            <tr>
+              <td><strong>Endereço:</strong></td>
+              <td class="text-capitalize">{{ medico.address }}</td>
+            </tr>
+            <tr>
+              <td><strong>Estado Civil:</strong></td>
+              <td class="text-capitalize">{{ medico.estado_civil }}</td>
+            </tr>
+
+            <!-- Informações Profissionais -->
+            <tr>
+              <td><strong>CRM:</strong></td>
+              <td>{{ medico.crm }}</td>
+            </tr>
+            <tr>
+              <td><strong>Especialidades:</strong></td>
+              <td>
+                  {% for especialidade in medico.especialidades.all %}
+                      {{ especialidade.nome }}{% if not forloop.last %}, {% endif %}
+                  {% empty %}
+                      Nenhuma especialidade cadastrada
+                  {% endfor %}
+              </td>
+          </tr>
+          </table>
+        {% else %}
+          <p>Nenhum médico encontrado.</p>
+        {% endif %}
+        
+        <div>
+          <a href="{% url 'medico_update' medico.id %}" class="btn btn-sm btn-warning">Editar</a>
+          <form action="{% url 'medico_delete' medico.id %}" 
+            onsubmit="return confirm('Tem certeza de que deseja excluir o médico {{ medico.first_name|title }}?')"
+            method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+          </form>
+          <a href="{% url 'medico_list' %}" class="btn btn-sm btn-secondary">Voltar</a>
+        </div>
+      </div>
+    </div>
+{% endblock %}

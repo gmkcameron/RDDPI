@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 justify-content-between">
+    <h2 >Lista de Prontuários</h2>
+    <a href="{% url 'prontuario_create' %}" class="btn btn-primary">Novo Prontuário</a>
+</nav>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Paciente</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prontuario in prontuarios %}
+        <tr>
+            <td>{{ prontuario.id }}</td>
+            <td>{{ prontuario.paciente }}</td>
+            <td>{{ prontuario.data_consulta|date:"d/m/Y" }}</td>
+            <td>{{ prontuario.horario }}</td>
+            <td>
+                <a href="{% url 'prontuario_detail' prontuario.id %}" class="btn btn-sm btn-info">Detalhes</a>
+                <a href="{% url 'prontuario_update' prontuario.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="{% url 'prontuario_delete' prontuario.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
